@@ -20,6 +20,7 @@ public class LetterGun : MonoBehaviour {
 		if(Input.GetKeyDown(letter.ToLower())) {
 			// Debug.Log("Fire: " + letter);
 			StartCoroutine(Fire());
+			GameManager.Instance.shotsFired += 1;
 		}
 	}
 
