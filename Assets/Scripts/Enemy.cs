@@ -5,7 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
 	public float speed = 100f;
-
+	public ParticleSystem explosionPFXPrefab;
+	
 	private Vector2 _destination;
 
 	void Start() {
@@ -32,7 +33,11 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void Die() {
-		GameManager.Instance.enemiesKilled += 1;
 		Destroy(this.gameObject);
+		GameManager.Instance.enemiesKilled += 1;
+
+		var pfx = GameObject.Instantiate(explosionPFXPrefab, transform.position, Quaternion.identity);
+		pfx.Play();
+		Destroy(pfx, pfx.main.duration);
 	}
 }

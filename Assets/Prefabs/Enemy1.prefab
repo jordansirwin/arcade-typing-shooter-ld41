@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  explosionPFXPrefab: {fileID: 198506333371021066, guid: 91f82128d39f24543a33a4089f1575d6,
+    type: 2}
 --- !u!212 &212356576312671688
 SpriteRenderer:
   m_ObjectHideFlags: 1
