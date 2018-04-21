@@ -12,7 +12,19 @@ public class LetterGun : MonoBehaviour {
 	public float maxDistanceFireGoes = 600f;
 	public float fireSpeed = 300f;
 
+	private AudioSource _fireAudioSource;
+	private float _firePitch;
+
 	void Start() {
+		_fireAudioSource = GetComponent<AudioSource>();
+		_fireAudioSource.clip = GameManager.Instance.fireShotClip;
+
+		// get ascii value
+		var ascii = (int)letter.ToCharArray()[0] - 65;
+		// adjust pitch based on this: 
+		// https://answers.unity.com/questions/127562/pitch-in-unity.html
+		_firePitch = Mathf.Pow(1.05946f, ascii);
+
 		letterText.text = letter;
 	}
 
@@ -25,6 +37,8 @@ public class LetterGun : MonoBehaviour {
 	}
 
 	IEnumerator Fire() {
+		_fireAudioSource.pitch = _firePitch;
+		_fireAudioSource.Play();
 		var go = GameObject.Instantiate(firePrefab, fireSource.position, fireSource.rotation);
 		
 		while(maxDistanceFireGoes - go.transform.position.y > 10f) {

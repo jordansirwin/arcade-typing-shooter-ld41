@@ -42,10 +42,18 @@ public class GameManager : MonoBehaviour {
 	public Transform enemySpawnMaxYPosition;
 	public Transform enemyEscapeXPosition;
 
+	public AudioClip musicClip;
+	public AudioClip fireShotClip;
+
 	public int Score { get { return (enemiesKilled * 5) - shotsFired - (enemiesEscaped * 10); } }
 
-	// Use this for initialization
+	private AudioSource _musicAudioSource;
+
 	void Start () {
+		_musicAudioSource = GetComponent<AudioSource>();
+		_musicAudioSource.clip = musicClip;
+		_musicAudioSource.Play();
+		
 		InvokeRepeating("SpawnEnemies", spawnInitialWait, spawnCooldown);
 		InvokeRepeating("UpdateScores", 0f, 0.25f);
 	}
