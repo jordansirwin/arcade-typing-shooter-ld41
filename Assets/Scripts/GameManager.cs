@@ -30,12 +30,16 @@ public class GameManager : MonoBehaviour {
 	public Text escapesText;
 	public Text shotsText;
 
+	public float minEnemySpeed = 50f;
+	public float maxEnemySpeed = 200f;
 	public float spawnInitialWait = 5f;
 	public float spawnCooldown = 5f;
 
 	public GameObject[] enemies;
 
 	public Transform enemySpawnXPosition;
+	public Transform enemySpawnMinYPosition;
+	public Transform enemySpawnMaxYPosition;
 	public Transform enemyEscapeXPosition;
 
 	public int Score { get { return (enemiesKilled * 5) - shotsFired - (enemiesEscaped * 10); } }
@@ -54,8 +58,13 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void SpawnEnemies() {
-		var rng = Random.Range(0, enemies.Length);
+		var rndEnemy = Random.Range(0, enemies.Length);
+		var rndY = Random.Range(enemySpawnMinYPosition.position.y, enemySpawnMaxYPosition.position.y);
+		var rndSpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
 
-		GameObject.Instantiate(enemies[rng], enemySpawnXPosition.position, enemySpawnXPosition.rotation);
+		var position = new Vector2(enemySpawnXPosition.position.x, rndY);
+		var go = GameObject.Instantiate(enemies[rndEnemy], position, enemySpawnXPosition.rotation);
+		var enemyGO = go.GetComponent<Enemy>();
+		enemyGO.speed = rndSpeed;
 	}
 }
