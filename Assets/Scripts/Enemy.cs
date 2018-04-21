@@ -21,6 +21,25 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void Escape() {
+		GameManager.Instance.enemiesEscaped += 1;
+		Destroy(this.gameObject);
+	}
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		Debug.Log("OnTriggerEnter2D!");
+		if(collider.gameObject.tag != "Bullet") return;
+
+		Die();
+	}
+	
+	void OnCollisionEnter2D(Collision2D collision) {
+		Debug.Log("OnCollisionEnter2D!");
+		if(collision.gameObject.tag != "Bullet") return;
+
+		Die();
+	}
+
+	void Die() {
 		GameManager.Instance.enemiesKilled += 1;
 		Destroy(this.gameObject);
 	}

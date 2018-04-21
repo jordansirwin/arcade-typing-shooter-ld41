@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4924331410640236}
   - component: {fileID: 114296045515186504}
+  - component: {fileID: 58221914584848076}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -36,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4997705464535268}
   - component: {fileID: 212356576312671688}
-  - component: {fileID: 58673774443825524}
   m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
@@ -71,21 +71,21 @@ Transform:
   m_Father: {fileID: 4924331410640236}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58673774443825524
+--- !u!58 &58221914584848076
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1648945993283282}
+  m_GameObject: {fileID: 1148502339869942}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.00012130737, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.08942795
 --- !u!114 &114296045515186504
 MonoBehaviour:
   m_ObjectHideFlags: 1

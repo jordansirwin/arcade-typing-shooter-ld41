@@ -12,11 +12,8 @@ public class LetterGun : MonoBehaviour {
 	public float maxDistanceFireGoes = 600f;
 	public float fireSpeed = 300f;
 
-	// private Vector2 _fireDirection;
-
 	void Start() {
 		letterText.text = letter;
-		// _fireDirection = new Vector2(transform.position.x, transform.position.y);
 	}
 
 	void Update () {
@@ -35,7 +32,7 @@ public class LetterGun : MonoBehaviour {
 		}
 
 		Destroy(go);
-		Debug.Log("Destroying GO");
+		// Debug.Log("Destroying GO");
 		yield break;
 	}
 }

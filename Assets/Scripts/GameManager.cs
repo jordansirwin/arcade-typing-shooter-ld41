@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 
 	public int shotsFired;
 	public int enemiesKilled;
+	public int enemiesEscaped;
 	public int life;
 
 	public float spawnInitialWait = 5f;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour {
 	public Transform enemySpawnXPosition;
 	public Transform enemyEscapeXPosition;
 
-	public int Score { get { return enemiesKilled - shotsFired; } }
+	public int Score { get { return enemiesKilled - (shotsFired / 2) - (enemiesEscaped * 5); } }
 
 	// Use this for initialization
 	void Start () {

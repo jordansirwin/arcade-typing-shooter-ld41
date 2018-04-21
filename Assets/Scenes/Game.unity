@@ -815,6 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotsFired: 0
   enemiesKilled: 0
+  enemiesEscaped: 0
   life: 0
   spawnInitialWait: 1
   spawnCooldown: 5
