@@ -24,7 +24,7 @@ public class LetterGun : MonoBehaviour {
 		letterText.text = letterInfo.Letter;
 		letterText.color = letterInfo.LetterColor;
 
-		Debug.Log("LetterGun Color for " + letter + " is " + letterInfo.LetterColor);
+		// Debug.Log("LetterGun Color for " + letter + " is " + letterInfo.LetterColor);
 
 		fireAudioSource.clip = GameManager.Instance.fireShotClip;
 		fireAudioSource.pitch = letterInfo.AudioPitch;

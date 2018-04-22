@@ -49,8 +49,10 @@ public class GameManager : MonoBehaviour {
 	public int enemiesHit;
 	public int enemiesBonus;
 
-	public float spawnInitialWait = 5f;
-	public float spawnCooldown = 5f;
+	public float startingSpawnDelay = 2f;
+	public float startingSpawnCooldown = 5f;
+	public float spawnCooldownDecrement = 0.1f;
+	public float spawnCooldownMin = 1f;
 
 	public GameObject[] enemies;
 
@@ -70,6 +72,10 @@ public class GameManager : MonoBehaviour {
 	private AudioSource _musicAudioSource;
 	private Dictionary<string, LetterInfo> _letterInfoCache = new Dictionary<string, LetterInfo>();
 	private Dictionary<string, Color> _lettersToColors = new Dictionary<string, Color>();
+
+	private float _currentSpawnCooldown;
+	private float _nextSpawnTime;
+
 
 	void PreStart() { 
 
@@ -108,13 +114,26 @@ public class GameManager : MonoBehaviour {
 		_musicAudioSource.clip = musicClip;
 		_musicAudioSource.Play();
 		
-		InvokeRepeating("SpawnEnemies", spawnInitialWait, spawnCooldown);
+		_currentSpawnCooldown = startingSpawnDelay;
+		_nextSpawnTime = startingSpawnCooldown;
+
+		// InvokeRepeating("SpawnEnemies", spawnInitialWait, spawnCooldown);
 	}
+
 
 	void Update() {
 		// TEST HACKS
 		if(Input.GetKeyDown(KeyCode.Escape)) {
 			SetGameOver();
+		}
+
+		_currentSpawnCooldown -= Time.deltaTime;
+		if(_currentSpawnCooldown <= 0f)
+		{
+			SpawnEnemies();
+			_musicAudioSource.pitch += 0.02f;
+			_currentSpawnCooldown = _nextSpawnTime;
+			_nextSpawnTime = Mathf.Max(spawnCooldownMin, _nextSpawnTime - spawnCooldownDecrement);
 		}
 	}
 
@@ -131,6 +150,7 @@ public class GameManager : MonoBehaviour {
 		var go = GameObject.Instantiate(enemies[rndEnemy], position, enemySpawnXPosition.rotation);
 		var enemyGO = go.GetComponent<Enemy>();
 		enemyGO.letter = rndLetter;
+		enemyGO.baseSpeed += 3f;
 	}
 
 	public void RestartGame() {
@@ -138,6 +158,9 @@ public class GameManager : MonoBehaviour {
 		enemiesHit = 0;
 		enemiesBonus = 0;
 		shotsFired = 0;
+		_currentSpawnCooldown = startingSpawnDelay;
+		_nextSpawnTime = startingSpawnCooldown;
+		_musicAudioSource.pitch = 1f;
 
 		_isGameOver = false;
 		SceneManager.LoadScene("Game");
@@ -160,7 +183,6 @@ public class GameManager : MonoBehaviour {
 		var ascii = (int)letter.ToCharArray()[0] - 65;
 
 		if(!_letterInfoCache.ContainsKey(letter)) {
-			float c = (ascii+1f)*10f/255f;
 			_letterInfoCache.Add(letter, 
 				new LetterInfo {
 					Letter = letter,

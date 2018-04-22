@@ -79,7 +79,6 @@ public class Enemy : MonoBehaviour {
 		}
 		
 		_moveClip.Stop();
-		Destroy(this.gameObject);
 
 		ParticleSystem pfx;
 		if(awardBonusPoints)
@@ -93,6 +92,8 @@ public class Enemy : MonoBehaviour {
 		audio.Play();
 
 		pfx.Play();
-		Destroy(pfx, pfx.main.duration);
+		Destroy(pfx.gameObject, pfx.main.duration);
+
+		Destroy(this.gameObject);
 	}
 }

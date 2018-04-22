@@ -251,12 +251,10 @@ MonoBehaviour:
   shotsFired: 0
   enemiesHit: 0
   enemiesBonus: 0
-  life: 0
-  enemyEscapeGameOverCount: 1
-  minEnemySpeed: 50
-  maxEnemySpeed: 200
-  spawnInitialWait: 2
-  spawnCooldown: 4
+  startingSpawnDelay: 1
+  startingSpawnCooldown: 5
+  spawnCooldownDecrement: 0.1
+  spawnCooldownMin: 1
   enemies:
   - {fileID: 1164506112173566, guid: 436802b96289f4cb69c3411b1370e537, type: 2}
   enemySpawnXPosition: {fileID: 4143009412590816}
