@@ -13,9 +13,10 @@ public class Enemy : MonoBehaviour {
 	private Vector2 _destination;
 	private AudioSource _moveClip;
 	private float _movePitch;
+	private GameManager.LetterInfo letterInfo;
 
 	void Start() {
-		var letterInfo = GameManager.Instance.GetLetterInfo(letter);
+		letterInfo = GameManager.Instance.GetLetterInfo(letter);
 		letter = letterInfo.Letter;
 		letterText.text = letterInfo.Letter;
 		letterText.color = letterInfo.LetterColor;
@@ -23,7 +24,6 @@ public class Enemy : MonoBehaviour {
 		_moveClip = GetComponent<AudioSource>();
 		_moveClip.clip = GameManager.Instance.enemyMoveClip;
 		_moveClip.pitch = letterInfo.AudioPitch;
-		_moveClip.dopplerLevel = letterInfo.AudioPitch;
 
 		sprite.color = letterInfo.Color;
 
@@ -81,6 +81,11 @@ public class Enemy : MonoBehaviour {
 		Destroy(this.gameObject);
 
 		var pfx = GameObject.Instantiate(explosionPFXPrefab, transform.position, Quaternion.identity);
+		var audio = pfx.GetComponent<AudioSource>();
+		audio.clip = GameManager.Instance.enemyExplosionClip;
+		audio.pitch = letterInfo.AudioPitch;
+		audio.Play();
+
 		pfx.Play();
 		Destroy(pfx, pfx.main.duration);
 	}

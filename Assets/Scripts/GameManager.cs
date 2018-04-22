@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour {
 	public AudioClip musicClip;
 	public AudioClip fireShotClip;
 	public AudioClip enemyMoveClip;
+	public AudioClip enemyExplosionClip;
 
 	public int Score { get { return (enemiesHit * 5) + (enemiesBonus * 10) - shotsFired; } }
 
