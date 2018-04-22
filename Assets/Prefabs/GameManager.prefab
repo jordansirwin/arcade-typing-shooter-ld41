@@ -253,10 +253,10 @@ MonoBehaviour:
   enemiesBonus: 0
   life: 0
   enemyEscapeGameOverCount: 1
-  minEnemySpeed: 30
-  maxEnemySpeed: 100
-  spawnInitialWait: 1
-  spawnCooldown: 5
+  minEnemySpeed: 50
+  maxEnemySpeed: 200
+  spawnInitialWait: 2
+  spawnCooldown: 4
   enemies:
   - {fileID: 1164506112173566, guid: 436802b96289f4cb69c3411b1370e537, type: 2}
   enemySpawnXPosition: {fileID: 4143009412590816}
@@ -266,3 +266,4 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: 9424dbed04f724245964cebeec5305bf, type: 3}
   fireShotClip: {fileID: 8300000, guid: fc9ff27171f2143fdb84122868cda5ef, type: 3}
   enemyMoveClip: {fileID: 8300000, guid: fc9ff27171f2143fdb84122868cda5ef, type: 3}
+  enemyExplosionClip: {fileID: 8300000, guid: d3369e107840f431394890a1fed9fea4, type: 3}

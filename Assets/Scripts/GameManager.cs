@@ -48,11 +48,7 @@ public class GameManager : MonoBehaviour {
 	public int shotsFired;
 	public int enemiesHit;
 	public int enemiesBonus;
-	public int life;
 
-	public int enemyEscapeGameOverCount = 1;
-	public float minEnemySpeed = 50f;
-	public float maxEnemySpeed = 200f;
 	public float spawnInitialWait = 5f;
 	public float spawnCooldown = 5f;
 
