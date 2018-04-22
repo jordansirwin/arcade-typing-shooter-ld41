@@ -1086,7 +1086,7 @@ MonoBehaviour:
   enemySpawnMinYPosition: {fileID: 498208847}
   enemySpawnMaxYPosition: {fileID: 1196503118}
   enemyEscapeXPosition: {fileID: 1573671433}
-  musicClip: {fileID: 8300000, guid: f3d7c09425cb74ff2987df4c1a049091, type: 3}
+  musicClip: {fileID: 8300000, guid: 9424dbed04f724245964cebeec5305bf, type: 3}
   fireShotClip: {fileID: 8300000, guid: 3c7e9e5833b204f8e80ea2b740490a2d, type: 3}
 --- !u!82 &677617901
 AudioSource:
@@ -1099,7 +1099,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f3d7c09425cb74ff2987df4c1a049091, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
