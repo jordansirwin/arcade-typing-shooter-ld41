@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 					r * r  * .241f + 
 					g * g  * .691f + 
 					b * b  * .068f);
-				return brightness < 130 ? Color.white : Color.black;
+				return brightness < 145 ? Color.white : Color.black;
 			}
 		}
 	}

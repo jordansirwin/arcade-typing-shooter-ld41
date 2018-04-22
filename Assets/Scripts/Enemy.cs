@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
 	public TextMesh letterText;
 	public float baseSpeed = 10f;
 	public ParticleSystem explosionPFXPrefab;
+	public ParticleSystem bonusExplosionPFXPrefab;
 	public SpriteRenderer sprite;
 	
 	private Vector2 _destination;
@@ -80,10 +81,15 @@ public class Enemy : MonoBehaviour {
 		_moveClip.Stop();
 		Destroy(this.gameObject);
 
-		var pfx = GameObject.Instantiate(explosionPFXPrefab, transform.position, Quaternion.identity);
+		ParticleSystem pfx;
+		if(awardBonusPoints)
+			pfx = GameObject.Instantiate(bonusExplosionPFXPrefab, transform.position, Quaternion.identity);
+		else 
+			pfx = GameObject.Instantiate(explosionPFXPrefab, transform.position, Quaternion.identity);
+
 		var audio = pfx.GetComponent<AudioSource>();
 		audio.clip = GameManager.Instance.enemyExplosionClip;
-		audio.pitch = letterInfo.AudioPitch;
+		audio.pitch = awardBonusPoints ? letterInfo.AudioPitch/2 : letterInfo.AudioPitch;
 		audio.Play();
 
 		pfx.Play();

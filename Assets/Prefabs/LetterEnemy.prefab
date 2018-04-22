@@ -269,6 +269,8 @@ MonoBehaviour:
   baseSpeed: 10
   explosionPFXPrefab: {fileID: 198506333371021066, guid: 91f82128d39f24543a33a4089f1575d6,
     type: 2}
+  bonusExplosionPFXPrefab: {fileID: 198298089507093334, guid: 1027b612168c3489fbccd92c8f72ac53,
+    type: 2}
   sprite: {fileID: 212070209105406254}
 --- !u!212 &212070209105406254
 SpriteRenderer:
