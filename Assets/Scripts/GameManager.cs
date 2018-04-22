@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -31,14 +32,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public int shotsFired;
-	public int enemiesKilled;
-	public int enemiesEscaped;
+	public int enemiesHit;
+	public int enemiesBonus;
 	public int life;
-	public Text scoreText;
-	public Text killsText;
-	public Text escapesText;
-	public Text shotsText;
 
+	public int enemyEscapeGameOverCount = 1;
 	public float minEnemySpeed = 50f;
 	public float maxEnemySpeed = 200f;
 	public float spawnInitialWait = 5f;
@@ -55,11 +53,11 @@ public class GameManager : MonoBehaviour {
 	public AudioClip fireShotClip;
 	public AudioClip enemyMoveClip;
 
-	public int Score { get { return (enemiesKilled * 5) - shotsFired - (enemiesEscaped * 10); } }
+	public int Score { get { return (enemiesHit * 5) + (enemiesBonus * 10) - shotsFired; } }
 
+	private bool _isGameOver = false;
 	private AudioSource _musicAudioSource;
 	private Dictionary<string, LetterInfo> _letterInfoCache = new Dictionary<string, LetterInfo>();
-
 	private Dictionary<string, Color> _lettersToColors = new Dictionary<string, Color>();
 
 	void PreStart() { 
@@ -92,7 +90,7 @@ public class GameManager : MonoBehaviour {
 		_lettersToColors.Add("Y", new Color(225f/255f, 225f/255f, 0f/255f));
 		_lettersToColors.Add("Z", new Color(255f/255f, 80f/255f, 5f/255f));
 	}
-	
+
 	void Start () {
 
 		_musicAudioSource = GetComponent<AudioSource>();
@@ -100,27 +98,49 @@ public class GameManager : MonoBehaviour {
 		_musicAudioSource.Play();
 		
 		InvokeRepeating("SpawnEnemies", spawnInitialWait, spawnCooldown);
-		InvokeRepeating("UpdateScores", 0f, 0.25f);
 	}
 
-	void UpdateScores() {
-		scoreText.text = Score.ToString();
-		killsText.text = enemiesKilled.ToString();
-		escapesText.text = enemiesEscaped.ToString();
-		shotsText.text = shotsFired.ToString();
+	void Update() {
+		// TEST HACKS
+		if(Input.GetKeyDown(KeyCode.Escape)) {
+			SetGameOver();
+		}
 	}
-	
+
 	void SpawnEnemies() {
+		// Debug.Log("Spawn");
+		if(IsGameOver()) return;
+		// Debug.Log("Spawning!");
+
 		var rndLetter = ((char)Random.Range(65, 91)).ToString();
 		var rndEnemy = Random.Range(0, enemies.Length);
 		var rndY = Random.Range(enemySpawnMinYPosition.position.y, enemySpawnMaxYPosition.position.y);
-		// var rndSpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
 
 		var position = new Vector2(enemySpawnXPosition.position.x, rndY);
 		var go = GameObject.Instantiate(enemies[rndEnemy], position, enemySpawnXPosition.rotation);
 		var enemyGO = go.GetComponent<Enemy>();
 		enemyGO.letter = rndLetter;
-		// enemyGO.speed = rndSpeed;
+	}
+
+	public void StartGame() {
+		// Debug.Log("StartGame");
+		enemiesHit = 0;
+		enemiesBonus = 0;
+		shotsFired = 0;
+
+		_isGameOver = false;
+		SceneManager.LoadScene("Game");
+	}
+
+	public void SetGameOver() {
+		// Debug.Log("SetGameOver");
+		_isGameOver = true;
+
+		SceneManager.LoadScene("GameOver");
+	}
+
+	public bool IsGameOver() {
+		return _isGameOver;
 	}
 
 	public LetterInfo GetLetterInfo(string letter) {

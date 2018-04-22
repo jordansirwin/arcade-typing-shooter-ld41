@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour {
 
 	void Start() {
 		var letterInfo = GameManager.Instance.GetLetterInfo(letter);
+		letter = letterInfo.Letter;
 		letterText.text = letterInfo.Letter;
 
 		_moveClip = GetComponent<AudioSource>();
@@ -30,6 +31,9 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	void Update () {
+		// if game is over don't do anything
+		if(CheckIfGameOver()) return;
+
 		if(Vector2.Distance(transform.position, _destination) < 10f) {
 			Escape();
 		}
@@ -41,21 +45,39 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	bool CheckIfGameOver() {
+		if(!GameManager.Instance.IsGameOver()) return false;
+
+		Die(false, false);
+		return true;
+	}
+
 	void OnTriggerEnter2D(Collider2D collider) {
+		if(GameManager.Instance.IsGameOver()) return;
+
 		if(collider.gameObject.tag != "Bullet") return;
 
-		Die();
+		var bonus = collider.gameObject.GetComponent<Bullet>().letter == letter;
+		Die(!bonus, bonus);
 	}
 
 	void Escape() {
-		GameManager.Instance.enemiesEscaped += 1;
-		Destroy(this.gameObject);
+		// Debug.Log("Escape");
+		Die(false, false);
+		GameManager.Instance.SetGameOver();
 	}
 
-	void Die() {
+	void Die(bool awardNormalPoints, bool awardBonusPoints) {
+
+		if(awardNormalPoints) {
+			GameManager.Instance.enemiesHit += 1;
+		}
+		if(awardBonusPoints) {
+			GameManager.Instance.enemiesBonus += 1;
+		}
+		
 		_moveClip.Stop();
 		Destroy(this.gameObject);
-		GameManager.Instance.enemiesKilled += 1;
 
 		var pfx = GameObject.Instantiate(explosionPFXPrefab, transform.position, Quaternion.identity);
 		pfx.Play();

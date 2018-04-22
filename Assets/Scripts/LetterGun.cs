@@ -34,6 +34,8 @@ public class LetterGun : MonoBehaviour {
 	}
 
 	void Update () {
+		if(GameManager.Instance.IsGameOver()) return;
+
 		if(Input.GetKeyDown(letter.ToLower())) {
 			// Debug.Log("Fire: " + letter);
 			StartCoroutine(Fire());
@@ -45,6 +47,7 @@ public class LetterGun : MonoBehaviour {
 		// _fireAudioSource.pitch = _firePitch;
 		fireAudioSource.Play();
 		var go = GameObject.Instantiate(firePrefab, fireSource.position, fireSource.rotation);
+		go.GetComponent<Bullet>().letter = letter;
 		
 		while(maxDistanceFireGoes - go.transform.position.y > 10f) {
 			go.transform.position = Vector2.MoveTowards(go.transform.position, transform.position + (Vector3.up * maxDistanceFireGoes), Time.deltaTime * fireSpeed);
