@@ -29,6 +29,20 @@ public class GameManager : MonoBehaviour {
 		public int ASCIIOffset;
 		public float AudioPitch;
 		public Color Color;
+
+		public Color LetterColor {
+			get {
+				// magic: http://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx
+				var r = Color.r * 255;
+				var g = Color.r * 255;
+				var b = Color.b * 255;
+				var brightness = Mathf.Sqrt(
+					r * r  * .241f + 
+					g * g  * .691f + 
+					b * b  * .068f);
+				return brightness < 130 ? Color.white : Color.black;
+			}
+		}
 	}
 
 	public int shotsFired;

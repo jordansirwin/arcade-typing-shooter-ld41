@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 		var letterInfo = GameManager.Instance.GetLetterInfo(letter);
 		letter = letterInfo.Letter;
 		letterText.text = letterInfo.Letter;
+		letterText.color = letterInfo.LetterColor;
 
 		_moveClip = GetComponent<AudioSource>();
 		_moveClip.clip = GameManager.Instance.enemyMoveClip;

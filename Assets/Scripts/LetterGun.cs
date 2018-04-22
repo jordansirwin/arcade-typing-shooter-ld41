@@ -22,6 +22,9 @@ public class LetterGun : MonoBehaviour {
 
 		letterInfo = GameManager.Instance.GetLetterInfo(letter);
 		letterText.text = letterInfo.Letter;
+		letterText.color = letterInfo.LetterColor;
+
+		Debug.Log("LetterGun Color for " + letter + " is " + letterInfo.LetterColor);
 
 		fireAudioSource.clip = GameManager.Instance.fireShotClip;
 		fireAudioSource.pitch = letterInfo.AudioPitch;
@@ -48,7 +51,7 @@ public class LetterGun : MonoBehaviour {
 		fireAudioSource.Play();
 		var go = GameObject.Instantiate(firePrefab, fireSource.position, fireSource.rotation);
 		go.GetComponent<Bullet>().letter = letter;
-		
+
 		while(maxDistanceFireGoes - go.transform.position.y > 10f) {
 			go.transform.position = Vector2.MoveTowards(go.transform.position, transform.position + (Vector3.up * maxDistanceFireGoes), Time.deltaTime * fireSpeed);
 			yield return null;
