@@ -12,20 +12,25 @@ public class LetterGun : MonoBehaviour {
 	public float maxDistanceFireGoes = 600f;
 	public float fireSpeed = 300f;
 
-	private AudioSource _fireAudioSource;
-	private float _firePitch;
+	public AudioSource fireAudioSource;
+	public SpriteRenderer sprite;
+	public LineRenderer stripe;
+
+	public GameManager.LetterInfo letterInfo;
 
 	void Start() {
-		_fireAudioSource = GetComponent<AudioSource>();
-		_fireAudioSource.clip = GameManager.Instance.fireShotClip;
 
-		// get ascii value
-		var ascii = (int)letter.ToCharArray()[0] - 65;
-		// adjust pitch based on this: 
-		// https://answers.unity.com/questions/127562/pitch-in-unity.html
-		_firePitch = Mathf.Pow(1.05946f, ascii);
+		letterInfo = GameManager.Instance.GetLetterInfo(letter);
+		letterText.text = letterInfo.Letter;
 
-		letterText.text = letter;
+		fireAudioSource.clip = GameManager.Instance.fireShotClip;
+		fireAudioSource.pitch = letterInfo.AudioPitch;
+
+		sprite.color = letterInfo.Color;
+
+		var stripColor = new Color(letterInfo.Color.r, letterInfo.Color.g, letterInfo.Color.b, 0.25f);
+		stripe.startColor = stripColor;
+		stripe.endColor = stripColor;
 	}
 
 	void Update () {
@@ -37,8 +42,8 @@ public class LetterGun : MonoBehaviour {
 	}
 
 	IEnumerator Fire() {
-		_fireAudioSource.pitch = _firePitch;
-		_fireAudioSource.Play();
+		// _fireAudioSource.pitch = _firePitch;
+		fireAudioSource.Play();
 		var go = GameObject.Instantiate(firePrefab, fireSource.position, fireSource.rotation);
 		
 		while(maxDistanceFireGoes - go.transform.position.y > 10f) {
