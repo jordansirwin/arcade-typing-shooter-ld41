@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour {
 		enemyGO.letter = rndLetter;
 	}
 
-	public void StartGame() {
+	public void RestartGame() {
 		// Debug.Log("StartGame");
 		enemiesHit = 0;
 		enemiesBonus = 0;
